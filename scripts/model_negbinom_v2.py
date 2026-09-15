@@ -4,16 +4,14 @@ model_negbinom_v2.py
 Negative binomial count regression for Kitchener water main failures.
 Runs TWO temporal splits for robustness comparison.
 
-SPLIT A (Primary):
-  Train : 1997-2016 (240 months)
-  Val   : 2017-2021 (60 months)   -- model selection
-  Test  : 2022-2025 (48 months)   -- final evaluation
+SPLIT A (Robustness):
+  Train : 1997-2016
+  Val   : 2017-2021
+  Test  : 2022-2025
 
-SPLIT B (Secondary):
-  Train : 1997-2020 (288 months)
-  Test  : 2021-2025 (60 months)   -- final evaluation
-  Selection via rolling-origin cross-validation on training block
-  (no separate val set needed)
+SPLIT B (Primary):
+  Train : 1997-2020
+  Test  : 2021-2025
 
 MODELS:
   M0 -- Seasonal naive baseline (minimum benchmark)

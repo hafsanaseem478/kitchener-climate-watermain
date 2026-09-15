@@ -1,29 +1,3 @@
-"""
-di_pipe_level_analysis.py
-=========================
-SUPPORTING ANALYSIS for the paper — Option B.
-
-Fits a pipe-year negative binomial model for DI showing how AGE and
-PRIOR BREAKS relate to failure risk.
-
-This is DESCRIPTIVE — it characterises the ageing/self-excitation
-relationship. It is NOT extrapolated to future years, because network
-composition depends on replacement decisions outside the scope of
-this paper.
-
-The main climate projection (from project_breaks.py) stays as the
-forecasting result. This script only adds pipe-level understanding
-of the ageing and prior-break signal.
-
-OUTPUT:
-  di_pipe_level_coefficients.csv  -- model coefficients and interpretation
-  di_pipe_level_summary.csv       -- key findings for the paper
-
-Run:
-  python di_pipe_level_analysis.py
-
-Requires: Water_Main_Breaks.csv, Water_Mains.csv in same folder
-"""
 
 import os
 import warnings
@@ -40,15 +14,18 @@ except NameError:
     script_dir = os.getcwd()
 
 
-# ── 1. LOAD DATA ──────────────────────────────────────────────────────────────
+# Input data lives in the repository's data directory.
+data_dir = os.path.join(os.path.dirname(script_dir), 'data')
+
+# 1. LOAD DATA 
 
 print("=" * 60)
 print("STEP 1: Loading data")
 print("=" * 60)
 
-b = pd.read_csv(os.path.join(script_dir, 'Water_Main_Breaks.csv'),
+b = pd.read_csv(os.path.join(data_dir, 'Water_Main_Breaks.csv'),
                 encoding='utf-8-sig', low_memory=False)
-m = pd.read_csv(os.path.join(script_dir, 'Water_Mains.csv'),
+m = pd.read_csv(os.path.join(data_dir, 'Water_Mains.csv'),
                 encoding='utf-8-sig', low_memory=False)
 
 b['dt'] = pd.to_datetime(b['Incident date'], errors='coerce')
@@ -67,7 +44,7 @@ print(f"  DI breaks (1997-2025): {len(bm):,}")
 print(f"  DI pipes in inventory: {len(mm):,}")
 
 
-# ── 2. BUILD PIPE-YEAR PANEL ──────────────────────────────────────────────────
+#  2. BUILD PIPE-YEAR PANEL 
 
 print("\n" + "=" * 60)
 print("STEP 2: Building pipe-year panel")
@@ -120,7 +97,7 @@ print(f"  Age range: {panel['age'].min()} to {panel['age'].max()} years")
 print(f"  Zero-break rows: {100*(panel['breaks']==0).mean():.1f}%")
 
 
-# ── 3. FIT MODEL ─────────────────────────────────────────────────────────────
+#  3. FIT MODEL 
 
 print("\n" + "=" * 60)
 print("STEP 3: Fitting negative binomial pipe-level model")
@@ -137,8 +114,19 @@ X = sm.add_constant(panel_fit[['age', 'age_sq', 'prior_breaks_cap']])
 y = panel_fit['breaks']
 offset = panel_fit['log_length']
 
-model = GLM(y, X, family=families.NegativeBinomial(alpha=1.0),
-            offset=offset).fit(maxiter=200, disp=False)
+glm = GLM(
+    y,
+    X,
+    family=families.NegativeBinomial(alpha=1.0),
+    offset=offset
+)
+
+model = glm.fit(
+    maxiter=200,
+    disp=False,
+    cov_type="cluster",
+    cov_kwds={"groups": panel_fit["pipe_id"]}
+)
 
 print(f"  AIC: {model.aic:.1f}")
 print(f"  Deviance: {model.deviance:.1f}")
@@ -225,15 +213,4 @@ print(f"  Saved: di_pipe_level_summary.csv")
 print("\n" + "=" * 60)
 print("DONE")
 print("=" * 60)
-print("""
-PAPER FRAMING FOR THIS RESULT:
 
-  "Pipe-level analysis of DI shows that each prior break multiplies
-   future break rate by [X.XXx], consistent with the self-excitation
-   pattern documented in recent water main survival literature.
-   Age enters the model with a significant positive effect, though
-   its magnitude is modest compared to the prior-break signal. This
-   analysis characterises the observed deterioration relationship
-   and is not extrapolated forward, since future network composition
-   depends on replacement decisions outside the scope of this paper."
-""")

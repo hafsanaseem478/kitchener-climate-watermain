@@ -48,8 +48,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-# ── 0. SETTINGS ───────────────────────────────────────────────────────────────
-
+#  0. SETTINGS
 STUDY_START = "1996-01-01"
 STUDY_END   = "2025-12-31"
 
@@ -78,7 +77,7 @@ OUTPUT_DAILY   = "climate_daily_merged.csv"
 OUTPUT_MONTHLY = "climate_monthly.csv"
 
 
-# ── 1. LOAD ALL CLIMATE FILES ─────────────────────────────────────────────────
+#  1. LOAD ALL CLIMATE FILES 
 
 print("=" * 60)
 print("STEP 1: Loading climate files")
@@ -117,7 +116,7 @@ combined = pd.concat(all_dfs, ignore_index=True)
 print(f"\n  Total rows loaded: {len(combined):,}")
 
 
-# ── 2. PARSE DATES AND FILTER TO STUDY WINDOW ─────────────────────────────────
+#  2. PARSE DATES AND FILTER TO STUDY WINDOW 
 
 print("\n" + "=" * 60)
 print("STEP 2: Parsing dates and filtering to study window")
@@ -176,7 +175,7 @@ print(f"  Days with MAX_TEMPERATURE:  {daily['MAX_TEMPERATURE'].notna().sum():,}
 print(f"  Days with TOTAL_RAIN:       {daily['TOTAL_RAIN'].notna().sum():,}")
 
 
-# ── 4. BUILD COMPLETE DATE SPINE ──────────────────────────────────────────────
+#  4. BUILD COMPLETE DATE SPINE 
 
 print("\n" + "=" * 60)
 print("STEP 4: Building complete date spine and filling gaps")
@@ -232,13 +231,12 @@ if still_missing > 0:
     print(miss_yr.to_string())
 
 
-# ── 5. CALCULATE MONTHLY CLIMATE COVARIATES ───────────────────────────────────
+#  5. CALCULATE MONTHLY CLIMATE COVARIATES 
 
 print("\n" + "=" * 60)
 print("STEP 5: Calculating monthly covariates")
 print("=" * 60)
 
-# ── Helper: Temperature gradient covariates ───────────────────────────────────
 def calc_gradients(group):
     """
     For a month's daily Tmean series, calculate:
@@ -256,7 +254,7 @@ def calc_gradients(group):
     TDG = float(np.max(-diffs))  if len(diffs) > 0 else np.nan
     return pd.Series({'TIG': TIG, 'TDG': TDG})
 
-# ── Helper: Freeze-thaw cycles ────────────────────────────────────────────────
+#  Helper: Freeze-thaw cycles 
 def calc_ftc(group):
     """
     Freeze-thaw cycle: a day where Tmin < 0 AND Tmax > 0.
@@ -365,13 +363,13 @@ print(f"\n  Sample — first 6 months:")
 print(monthly.head(6)[['month_str','Tmean','FI','FD','FTC','FI_cum','RI','RD']].to_string(index=False))
 
 
-# ── 6. SANITY CHECKS ──────────────────────────────────────────────────────────
+#  6. SANITY CHECKS 
 
 print("\n" + "=" * 60)
 print("STEP 6: Sanity checks")
 print("=" * 60)
+# FI should be most negative (largest freezing magnitude) in Jan/Feb
 
-# Check 1: FI should be highest in Jan/Feb
 print("\n  Mean FI by month (expect highest in Jan/Feb):")
 print(monthly.groupby('month')['FI'].mean().round(1).to_string())
 
@@ -407,7 +405,7 @@ for col in key_cols:
         print(f"    {col}: OK")
 
 
-# ── 7. SAVE OUTPUTS ───────────────────────────────────────────────────────────
+#  7. SAVE OUTPUTS 
 
 print("\n" + "=" * 60)
 print("STEP 7: Saving outputs")

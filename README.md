@@ -6,7 +6,7 @@ This study develops a monthly count-regression framework to predict water main f
 
 The work extends the Kitchener case study of Khashei et al. (2024) by replacing decade-level binary classification with monthly negative binomial count regression, adopting strictly temporal validation instead of random train–test splits, and adding pipe-level deterioration and design-life analyses.
 
-**Headline finding:** under all eight climate scenarios, cast iron failure rates are projected to *decline* by 11–37% by the 2080s, because frost accumulation — the dominant failure driver for aged metallic pipes in Kitchener — decreases as winters warm.
+**Headline finding:** under all eight climate scenarios, cast iron failure rates are projected to *decline* by 11–37% by the 2080s. Cast-iron failures are strongly associated with frost-related conditions in Kitchener, so reduced freezing exposure under warmer winters is the principal climate mechanism represented by the model.
 
 ---
 
@@ -29,7 +29,7 @@ City of Kitchener, Ontario, Canada (43.45°N, 80.49°W) — a cold-climate munic
 | PVC | 8,078 | 383.1 | 0.029 | 55.0% |
 | **Network total** | **16,207** | **938.3** | — | — |
 
-Breaks by material, 1997–2025: CI = 1,519; DI = 619; PVC = 320.
+Breaks by material, 1997–2025: CI = 1,519; DI = 619; PVC = 320. These three modeled materials account for 2,458 of the 2,869 recorded main breaks; the remaining 411 breaks occurred in other pipe materials and were excluded from the material-specific analysis.
 
 ---
 
@@ -64,7 +64,7 @@ log(μ) = log(km) + β₀ + Σ βₖ · climate_k
 
 The negative binomial specification is required by overdispersion in the count data (variance-to-mean ratio: CI = 5.6, DI = 1.8), which violates the Poisson equal-dispersion assumption.
 
-**Covariates:** freezing index (FI), freezing days (FD), freeze–thaw cycles (FTC), cumulative freezing index since October, mean/min/max temperature, average daily temperature range, and temperature-gradient terms — each also at 1-, 2-, and 3-month lags, since frost reaches pipe burial depth weeks after surface air temperature drops. Feature selection by backward stepwise AIC.
+**Covariates:** freezing index (FI), freezing days (FD), freeze–thaw cycles (FTC), cumulative freezing index since October, mean/min/max temperature, average daily temperature range, and temperature-gradient terms — each also at 1-, 2-, and 3-month lags to represent delayed climate–failure relationships. Feature selection used backward stepwise AIC, with model selection confined to pre-test observations for each temporal split. Final test-period observations were not used for coefficient estimation, feature selection, or model choice.
 
 **Precipitation excluded:** the primary station for 2010–2025 records total precipitation inconsistently relative to the earlier stations, introducing a station-change artefact that would contaminate any precipitation coefficient. Temperature records are consistent across all stations for the full period.
 
@@ -72,7 +72,7 @@ The negative binomial specification is required by overdispersion in the count d
 
 ### Pipe-level model — deterioration
 
-Negative binomial model on a pipe-year panel (145,525 DI pipe-years, 576 linked break events), with `log(pipe length)` offset:
+Negative binomial model on a pipe-year panel (145,525 DI pipe-years, 576 linked break events), with `log(pipe length)` offset. Because individual pipes contribute repeated annual observations, inference uses standard errors clustered by pipe ID:
 
 ```
 breaks ~ age + age² + prior_breaks
@@ -82,7 +82,7 @@ Because age varies *across pipes within* each calendar year, this specification 
 
 ### Design-life analysis
 
-Analytical survival simulation, pipe by pipe, over a 2025–2050 planning horizon against an assumed 75-year ductile iron design life:
+Analytical survival simulation, pipe by pipe, over a 2025–2050 planning horizon against a 75-year nominal ductile-iron service-life planning benchmark:
 
 ```
 hazard(t)   = 1 − exp(−rate(t) × length_km)
@@ -110,7 +110,7 @@ Annual rates combine the pipe-level deterioration model with the scenario-specif
 - Break counts and network totals reconciled against the raw source files
 - All coefficient signs consistent with the frost-loading mechanism
 - All eight projections decline; within each GCM, higher emissions produce larger declines (monotonic dose–response)
-- 90% prediction-interval coverage: 95–100% across materials and splits
+- Empirical coverage of the nominal 90% prediction intervals was 95–100% across materials and temporal splits, indicating conservative uncertainty intervals
 - Survivorship bias verified empirically: DI break incidence rises from 1.1% (age 20–30) to 22.4% (age 60–70), then falls to zero for the six pipes older than 70 years, with 82.6% of pipes aged 60+ never having broken
 - CI selects an identical feature set under both temporal splits, confirming stability
 
@@ -127,20 +127,22 @@ Annual rates combine the pipe-level deterioration model with the scenario-specif
 | DI | B (primary) | 1997–2020 | 2021–2025 | **0.022** | 0.905 | 95.0% | −0.58 |
 | DI | A (robustness) | 1997–2016 | 2022–2025 | 0.023 | 0.889 | 97.9% | −0.63 |
 
-All four models beat the seasonal naive baseline (MASE < 1) and fall within the 0.040–0.192 breaks/km/yr range reported for Saskatoon by Khashei et al. (2024) — achieved here under a stricter temporal evaluation protocol.
+All four models outperform the seasonal naive baseline (MASE < 1), indicating modest but consistent predictive value from the climate-informed specification under strictly temporal evaluation. The resulting error magnitudes also fall within the 0.040–0.192 breaks/km/yr range reported for Saskatoon by Khashei et al. (2024).
 
 ### 2. Climate drivers
 
 Cast iron, Split B (all coefficients significant):
 
+**Freezing-index sign convention:** FI is calculated as the sum of negative daily mean temperatures, so stronger freezing produces increasingly negative FI values. Consequently, a negative FI coefficient indicates that more severe freezing is associated with a higher expected break rate.
+
 | Feature | Coefficient | p-value | Direction |
 |---|---|---|---|
-| Freezing index | −0.00420 | 0.0007 | More frost → more breaks |
+| Freezing index | −0.00420 | 0.0007 | More severe freezing → higher expected break rate |
 | Mean temperature, lag 1 month | −0.05664 | 0.0019 | Colder prior month → more breaks |
 | Freezing days, lag 1 month | −0.03472 | 0.0332 | More freezing days → more breaks |
 | Seasonal (cos) term | +0.72855 | <0.0001 | Winter concentration |
 
-Ductile iron, Split B: freezing index (p < 0.0001), freezing index at lag 2 (p = 0.038), freezing days at lag 2 (p = 0.011). The dominant DI lag is two months versus one month for CI, consistent with deeper frost penetration in the predominantly newer, deeper-buried DI network.
+Ductile iron, Split B: freezing index (p < 0.0001), freezing index at lag 2 (p = 0.038), freezing days at lag 2 (p = 0.011). The dominant DI response occurs at approximately a two-month lag compared with one month for CI. Delayed transmission of surface freezing conditions to pipe depth is one possible physical explanation, although burial-depth data were unavailable to test this mechanism directly.
 
 ### 3. Climate projections to 2100
 
@@ -163,7 +165,7 @@ Each prior break multiplies the subsequent failure rate by **1.76×** (p < 0.000
 |---|---|---|---|---|---|---|
 | Rate multiplier | 1.00× | 1.76× | 3.10× | 5.46× | 9.62× | 16.95× |
 
-Age is also significant (p < 0.0001) but the fitted age–rate curve peaks near 56 years, beyond which survivorship bias dominates. Break history is the more reliable risk indicator.
+Age also shows a significant nonlinear relationship with failure rate: relative risk increases through middle age and reaches a fitted maximum near **56 years** before declining. Because the oldest surviving pipes represent a selected group of robust assets, this downturn is interpreted cautiously as survivorship bias rather than evidence that deterioration reverses with age. Prior break history therefore remains the more robust and actionable deterioration signal.
 
 ### 5. Design life
 
@@ -172,7 +174,7 @@ Age is also significant (p < 0.0001) but the fitted age–rate curve peaks near 
 | Historical baseline | 11.2% |
 | Warming scenarios (range across all eight) | 9.4% – 10.3% |
 
-Mean age at first break is approximately 57 years — about 18 years before the assumed design life — and varies by less than 0.3 years across all scenarios.
+Mean age at first break is approximately 57 years — about 18 years before the 75-year nominal service-life planning benchmark — and varies by less than 0.3 years across all scenarios.
 
 ---
 
@@ -182,7 +184,7 @@ Mean age at first break is approximately 57 years — about 18 years before the 
 
 ![Projected CI failure rate to 2100 under eight climate scenarios](figures/Figure_1_CI_projections.png)
 
-All eight scenarios fall below the 1997–2025 historical baseline (dotted line). Within each GCM, higher-emission pathways produce larger declines — the dose–response pattern expected if frost is the dominant failure driver.
+All eight scenarios fall below the 1997–2025 historical baseline (dotted line). Within each GCM, higher-emission pathways produce larger declines — a pattern consistent with stronger reductions in frost-related loading under greater warming.
 
 ### Figure 2 — Monthly distribution of breaks by material
 
@@ -206,7 +208,7 @@ Each prior break multiplies the subsequent failure rate by 1.76×, compounding t
 
 ## Interpretation
 
-Cast iron in Kitchener fails predominantly through frost loading: 60.3% of CI breaks occur in December–February, and every selected model covariate is a frost measure. As winters warm, frost accumulation falls and the model projects proportionally fewer frost-driven failures. This is why higher-emission scenarios yield *larger* reductions.
+Cast-iron failures in Kitchener are strongly associated with frost-related conditions: 60.3% of CI breaks occur in December–February, and the selected climate predictors are dominated by freezing-related variables. This pattern is consistent with frost loading being an important contributor to CI failures in this cold-climate network. As winters warm, modeled freezing exposure declines and the projected failure rate falls accordingly, explaining why higher-emission scenarios generally produce larger reductions.
 
 The direction of this result is supported independently in the literature. Fan et al. (2023), analysing 29,621 failure records from Cleveland, Ohio, concluded that pipes in cold regions may experience fewer breaks under warmer weather and milder winters, while pipes in hot regions face more corrosion-driven failures. Bruaset and Sægrov (2018), using 25,573 failures from nine Norwegian cities, established a statistically significant inverse relationship between temperature and failure rate and projected a 2.7–7.2% reduction in failures by 2070 depending on scenario. The Kitchener winter break share for cast iron (60.3%) closely matches the 60% reported for Norwegian grey cast iron in that study.
 
@@ -224,16 +226,17 @@ The direction of this result is supported independently in the literature. Fan e
 6. **PVC excluded from climate modelling.** Only nine test-period events — insufficient for reliable evaluation.
 7. **Static network assumption.** Projections hold exposure at 2025 levels; future replacement and expansion are not modelled.
 8. **Single city, 29 years.** Results are specific to Kitchener, and the record is short for climate attribution.
-9. **Design-life analysis assumes multiplicative independence** between climate and pipe-level deterioration effects, and freezes prior-break counts at 2025 values.
+9. **Limited GCM ensemble.** The projections use two CMIP6 models, CanESM5 and MIROC6, selected to represent contrasting climate responses. The eight GCM–SSP combinations therefore capture pathway and inter-model differences but do not represent the full range of CMIP6 structural uncertainty.
+10. **Design-life analysis assumes multiplicative independence** between climate and pipe-level deterioration effects, and freezes prior-break counts at 2025 values.
 
 ---
 
 ## Conclusions
 
-1. Projected warming reduces frost-driven water main failures in Kitchener by 11–37% (CI) and 12–23% (DI) by the 2080s, consistently across all eight climate scenarios.
+1. Projected warming reduces modeled water main failure rates in Kitchener by 11–37% (CI) and 12–23% (DI) by the 2080s, consistently across all eight climate scenarios.
 2. Cast iron is markedly more climate-sensitive than ductile iron, by winter break concentration, coefficient magnitude, and projected change.
 3. Prior break history is the strongest available deterioration signal for ductile iron, with each break multiplying subsequent risk by 1.76×.
-4. Under historical climate, 11.2% of ductile iron pipes are projected to experience a first break before their 75-year design life within the 2025–2050 horizon; warming reduces this modestly to 9.4–10.3%, but does not meaningfully change the age at which first breaks occur.
+4. Under historical climate, 11.2% of ductile iron pipes are projected to experience a first break before the 75-year nominal service-life planning benchmark within the 2025–2050 horizon; warming reduces this modestly to 9.4–10.3%, but does not meaningfully change the age at which first breaks occur.
 5. Network renewal targeting pipes with prior break histories remains the dominant risk-management lever; projected climate warming provides a modest offsetting benefit through reduced frost loading.
 
 ---
