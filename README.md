@@ -18,14 +18,6 @@ The work extends the Kitchener case study of Khashei et al. (2024) by replacing 
 
 ---
 
-## Why This Study Matters
-
-Water main breaks impose direct repair costs, service interruptions, and contamination risk. Break rates across North America rose by approximately 27% between the 2012 and 2018 national utility surveys (Folkman, 2018), while the American Water Works Association estimates over US$1 trillion in required replacement investment through 2050 (AWWA, 2012).
-
-Most existing failure models treat climate as one static covariate among many and do not project forward under emissions scenarios. Of the two prior studies on the Kitchener network, neither produces calibrated failure-rate forecasts under future climate, and both use random train–test splits that measure interpolation rather than forecast skill. This study addresses both gaps.
-
----
-
 ## Study Area
 
 City of Kitchener, Ontario, Canada (43.45°N, 80.49°W) — a cold-climate municipality with a network dominated by pre-1970 cast iron and post-1980 ductile iron and PVC.
@@ -313,13 +305,13 @@ Ahmad, T., Shaban, I. A., and Zayed, T. (2023). A review of climatic impacts on 
 
 Barton, N. A., Farewell, T. S., Hallett, S. H., and Acland, T. F. (2019). Improving pipe failure predictions: Factors affecting pipe failure in drinking water networks. *Water Research*, 164, 114926.
 
-Bruaset, S., and Sægrov, S. (2018). An analysis of the potential impact of climate change on the structural reliability of drinking water pipes in cold climate regions. *Water*, 10(4), 411.
+Bruaset, S., and Sægrov, S. (2018). An analysis of the potential impact of climate change on the structural reliability of drinking water pipes in cold climate regions. *Water*, 10(4), 411. https://doi.org/10.3390/w10040411
 
 Cannon, A. J. (2018). Multivariate quantile mapping bias correction: An N-dimensional probability density function transform for climate model simulations of multiple variables. *Climate Dynamics*, 50, 31–49.
 
 Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., and Taylor, K. E. (2016). Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization. *Geoscientific Model Development*, 9(5), 1937–1958.
 
-Fan, X., Zhang, X., Yu, A., Speitel, M., and Yu, X. (2023). Assessment of the impacts of climate change on water supply system pipe failures. *Scientific Reports*, 13, 7349.
+Fan, X., Zhang, X., Yu, A., Speitel, M., and Yu, X. (2023). Assessment of the impacts of climate change on water supply system pipe failures. *Scientific Reports*, 13, 7349. https://doi.org/10.1038/s41598-023-33548-7
 
 Folkman, S. (2018). *Water Main Break Rates in the USA and Canada: A Comprehensive Study.* Utah State University, Logan, UT.
 
@@ -329,7 +321,7 @@ Khashei, M., Boloukasli Ahmadgourabi, F., and Dziedzic, R. (2024). Predicting th
 
 Khashei, M., Dziedzic, R., and Roshani, E. (2024). Framework for predicting water main breaks in the face of climate change. *World Environmental and Water Resources Congress 2024*, ASCE.
 
-Rajani, B., Kleiner, Y., and Sink, J.-E. (2012). Exploration of the relationship between water main breaks and temperature covariates. *Urban Water Journal*, 9(2), 67–84.
+Rajani, B., Kleiner, Y., and Sink, J.-E. (2012). Exploration of the relationship between water main breaks and temperature covariates. *Urban Water Journal*, 9(2), 67–84. https://doi.org/10.1080/1573062X.2011.630093
 
 Zamenian, H., Mannering, F. L., Abraham, D. M., and Iseley, T. (2017). Modeling the frequency of water main breaks in water distribution systems: Random-parameters negative-binomial approach. *Journal of Infrastructure Systems*, 23(2), 04016036.
 
