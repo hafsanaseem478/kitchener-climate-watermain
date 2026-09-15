@@ -298,30 +298,29 @@ Python 3.9+ — `pandas`, `numpy`, `statsmodels` (negative binomial GLM), `scipy
 ---
 
 ## References
+Ahmad, T., Shaban, I. A., & Zayed, T. (2023). A review of climatic impacts on water main deterioration. Urban Climate, 49, 101552. https://doi.org/10.1016/j.uclim.2023.101552
 
-Ahmad, T., Shaban, I. A., and Zayed, T. (2023). A review of climatic impacts on water main deterioration. *Urban Climate*, 49, 101456.
+Barton, N. A., Farewell, T. S., Hallett, S. H., & Acland, T. F. (2019). Improving pipe failure predictions: Factors affecting pipe failure in drinking water networks. Water Research, 164, 114926. https://doi.org/10.1016/j.watres.2019.114926
 
-Barton, N. A., Farewell, T. S., Hallett, S. H., and Acland, T. F. (2019). Improving pipe failure predictions: Factors affecting pipe failure in drinking water networks. *Water Research*, 164, 114926.
+Bruaset, S., & Sægrov, S. (2018). An analysis of the potential impact of climate change on the structural reliability of drinking water pipes in cold climate regions. Water, 10(4), 411. https://doi.org/10.3390/w10040411
 
-Bruaset, S., and Sægrov, S. (2018). An analysis of the potential impact of climate change on the structural reliability of drinking water pipes in cold climate regions. *Water*, 10(4), 411. https://doi.org/10.3390/w10040411
+Cannon, A. J. (2018). Multivariate quantile mapping bias correction: An N-dimensional probability density function transform for climate model simulations of multiple variables. Climate Dynamics, 50(1–2), 31–49. https://doi.org/10.1007/s00382-017-3580-6
 
-Cannon, A. J. (2018). Multivariate quantile mapping bias correction: An N-dimensional probability density function transform for climate model simulations of multiple variables. *Climate Dynamics*, 50, 31–49.
+Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., & Taylor, K. E. (2016). Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization. Geoscientific Model Development, 9(5), 1937–1958. https://doi.org/10.5194/gmd-9-1937-2016
 
-Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., and Taylor, K. E. (2016). Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization. *Geoscientific Model Development*, 9(5), 1937–1958.
+Fan, X., Zhang, X., Yu, A., Speitel, M., & Yu, X. (2023). Assessment of the impacts of climat change on water supply system pipe failures. Scientific Reports, 13, 7349. https://doi.org/10.1038/s41598-023-33548-7
 
-Fan, X., Zhang, X., Yu, A., Speitel, M., and Yu, X. (2023). Assessment of the impacts of climate change on water supply system pipe failures. *Scientific Reports*, 13, 7349. https://doi.org/10.1038/s41598-023-33548-7
+Folkman, S. (2018). Water main break rates in the USA and Canada: A comprehensive study. Utah State University. Utah State University record
 
-Folkman, S. (2018). *Water Main Break Rates in the USA and Canada: A Comprehensive Study.* Utah State University, Logan, UT.
+Kakoudakis, K. I., Farmani, R., & Butler, D. (2018). Pipeline failure prediction in water distribution networks using weather conditions as explanatory factors. Journal of Hydroinformatics, 20(5), 1191–1200. https://doi.org/10.2166/hydro.2018.152
 
-Kakoudakis, K., Farmani, R., and Butler, D. (2018). Pipeline failure prediction in water distribution networks using weather conditions as explanatory factors. *Journal of Hydroinformatics*, 20(5), 1191–1200.
+Khashei, M., Boloukasli Ahmadgourabi, F., & Dziedzic, R. (2024). Predicting the future failures of urban water systems: Integrating climate change and machine learning prediction models. Engineering Proceedings, 69(1), 35. https://doi.org/10.3390/engproc2024069035
 
-Khashei, M., Boloukasli Ahmadgourabi, F., and Dziedzic, R. (2024). Predicting the future failures of urban water systems: Integrating climate change and machine learning prediction models. *Engineering Proceedings*, 69, 35.
+Khashei, M., Dziedzic, R., & Roshani, E. (2024). Framework for predicting water main breaks in the face of climate change. In World Environmental and Water Resources Congress 2024: Climate change impacts on the world we live in (pp. 1326–1338). American Society of Civil Engineers. https://doi.org/10.1061/9780784485477.119
 
-Khashei, M., Dziedzic, R., and Roshani, E. (2024). Framework for predicting water main breaks in the face of climate change. *World Environmental and Water Resources Congress 2024*, ASCE.
+Rajani, B., Kleiner, Y., & Sink, J.-E. (2012). Exploration of the relationship between water main breaks and temperature covariates. Urban Water Journal, 9(2), 67–84. https://doi.org/10.1080/1573062X.2011.630093
 
-Rajani, B., Kleiner, Y., and Sink, J.-E. (2012). Exploration of the relationship between water main breaks and temperature covariates. *Urban Water Journal*, 9(2), 67–84. https://doi.org/10.1080/1573062X.2011.630093
-
-Zamenian, H., Mannering, F. L., Abraham, D. M., and Iseley, T. (2017). Modeling the frequency of water main breaks in water distribution systems: Random-parameters negative-binomial approach. *Journal of Infrastructure Systems*, 23(2), 04016036.
+Zamenian, H., Mannering, F. L., Abraham, D. M., & Iseley, T. (2017). Modeling the frequency of water main breaks in water distribution systems: Random-parameters negative-binomial approach. Journal of Infrastructure Systems, 23(2), 04016035. https://doi.org/10.1061/(ASCE)IS.1943-555X.0000336
 
 **Data:** City of Kitchener Open Data Portal; Environment and Climate Change Canada Historical Climate Data; Pacific Climate Impacts Consortium (2024), *Statistically Downscaled Climate Scenarios — CanDCS-M6*, University of Victoria.
 
