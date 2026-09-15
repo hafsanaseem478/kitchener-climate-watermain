@@ -299,8 +299,6 @@ Python 3.9+ — `pandas`, `numpy`, `statsmodels` (negative binomial GLM), `scipy
 
 ## References
 
-American Water Works Association. (2012). *Buried No Longer: Confronting America's Water Infrastructure Challenge.* AWWA, Denver, CO.
-
 Ahmad, T., Shaban, I. A., and Zayed, T. (2023). A review of climatic impacts on water main deterioration. *Urban Climate*, 49, 101456.
 
 Barton, N. A., Farewell, T. S., Hallett, S. H., and Acland, T. F. (2019). Improving pipe failure predictions: Factors affecting pipe failure in drinking water networks. *Water Research*, 164, 114926.
@@ -328,20 +326,3 @@ Zamenian, H., Mannering, F. L., Abraham, D. M., and Iseley, T. (2017). Modeling 
 **Data:** City of Kitchener Open Data Portal; Environment and Climate Change Canada Historical Climate Data; Pacific Climate Impacts Consortium (2024), *Statistically Downscaled Climate Scenarios — CanDCS-M6*, University of Victoria.
 
 ---
-
-## Author
-
-**Hafsa Naseem** — Civil Engineer (Water Resources and Infrastructure)
-GitHub: [@hafsanaseem478](https://github.com/hafsanaseem478)
-
-Prepared as an independent research portfolio project in support of an MASc application in water infrastructure and asset management.
-
----
-
-## Licence and Citation
-
-Code in this repository is released for academic and non-commercial use. Source datasets remain subject to the licence terms of their respective providers and are not redistributed here.
-
-Suggested citation:
-
-> Naseem, H. (2026). *Climate-Integrated Water Main Failure Prediction for Kitchener, Ontario.* GitHub repository. https://github.com/hafsanaseem478/kitchener-climate-watermain
