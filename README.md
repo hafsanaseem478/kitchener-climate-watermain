@@ -186,12 +186,29 @@ Mean age at first break is approximately 57 years — about 18 years before the 
 
 ## Figures
 
-| Figure | Content |
-|---|---|
-| `Figure_1_CI_projections.png` | Projected CI failure rate, 2026–2100, all eight scenarios against historical baseline |
-| `Figure_2_seasonal_pattern.png` | Monthly distribution of breaks by material, showing winter concentration |
-| `Figure_3_validation.png` | Actual versus predicted annual failure rate, CI and DI, test period |
-| `Figure_4_prior_breaks.png` | DI failure-rate multiplier by prior break count |
+### Figure 1 — Projected cast iron failure rate to 2100
+
+![Projected CI failure rate to 2100 under eight climate scenarios](figures/Figure_1_CI_projections.png)
+
+All eight scenarios fall below the 1997–2025 historical baseline (dotted line). Within each GCM, higher-emission pathways produce larger declines — the dose–response pattern expected if frost is the dominant failure driver.
+
+### Figure 2 — Monthly distribution of breaks by material
+
+![Monthly distribution of water main breaks by material](figures/Figure_2_seasonal_pattern.png)
+
+Cast iron breaks concentrate sharply in December–February (60.3% of annual total) compared with ductile iron (40.1%), the empirical basis for cast iron's greater climate sensitivity.
+
+### Figure 3 — Model validation on held-out test years
+
+![Actual versus predicted annual failure rate, test period](figures/Figure_3_validation.png)
+
+Actual versus predicted annual failure rates for the 2021–2025 test period, which the model never saw during training. Cast iron predictions run consistently above observed values, reflecting ongoing replacement of failure-prone segments.
+
+### Figure 4 — Ductile iron failure rate by prior break count
+
+![DI failure rate multiplier by prior break count](figures/Figure_4_prior_breaks.png)
+
+Each prior break multiplies the subsequent failure rate by 1.76×, compounding to nearly 17× at five prior breaks. This effect is independent of climate and larger than the projected climate benefit.
 
 ---
 
@@ -233,11 +250,11 @@ The direction of this result is supported independently in the literature. Fan e
 
 ```
 kitchener-climate-watermain/
-├── Kitchener_Climate_Analysis.ipynb   Full annotated pipeline
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 ├── scripts/
+│   ├── build_panel.py                 Break records + inventory → monthly panel
 │   ├── build_climate.py               ECCC stations → monthly climate covariates
 │   ├── build_final_dataset.py         Break panel + climate → modelling dataset
 │   ├── model_negbinom_v2.py           Negative binomial models, both temporal splits
@@ -269,6 +286,7 @@ Download the files listed under Data Sources into `data/`. The repository does n
 **3. Run the pipeline in order**
 
 ```bash
+python scripts/build_panel.py            # → monthly_panel_primary.csv
 python scripts/build_climate.py          # → climate_monthly.csv
 python scripts/build_final_dataset.py    # → modelling_dataset.csv
 python scripts/process_cmip6.py          # → cmip6_monthly_*.csv  (8 files)
@@ -277,9 +295,7 @@ python scripts/run_all_results.py        # → model, pipe-level, design-life re
 python scripts/make_figures.py           # → all four figures
 ```
 
-The break panel (`monthly_panel_primary.csv`) is built in Step 1 of the notebook and is required by `build_final_dataset.py`.
-
-Each script expects its input files in the working directory and writes outputs to the same location. Alternatively, `Kitchener_Climate_Analysis.ipynb` runs the complete pipeline end to end with explanatory notes at each step.
+Each script expects its input files in the working directory and writes outputs to the same location. Scripts are self-documenting: each begins with a docstring stating its inputs, outputs, and the methodological choices it implements.
 
 ---
 
@@ -321,5 +337,19 @@ Zamenian, H., Mannering, F. L., Abraham, D. M., and Iseley, T. (2017). Modeling 
 
 ---
 
+## Author
 
+**Hafsa Naseem** — Civil Engineer (Water Resources and Infrastructure)
+GitHub: [@hafsanaseem478](https://github.com/hafsanaseem478)
 
+Prepared as an independent research portfolio project in support of an MASc application in water infrastructure and asset management.
+
+---
+
+## Licence and Citation
+
+Code in this repository is released for academic and non-commercial use. Source datasets remain subject to the licence terms of their respective providers and are not redistributed here.
+
+Suggested citation:
+
+> Naseem, H. (2026). *Climate-Integrated Water Main Failure Prediction for Kitchener, Ontario.* GitHub repository. https://github.com/hafsanaseem478/kitchener-climate-watermain
